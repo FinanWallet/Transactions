@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 from routes.records import record
+from routes.accounts import account
+from routes.categories import category
+from routes.subcategories import subcategory
+from routes.payment_methods import payment_method
+
 
 app = FastAPI(
     title="FinanceUN",
@@ -9,4 +14,7 @@ app = FastAPI(
     redoc_url=None
 )
 
-app.include_router(record)
+routes = [record, account, category, subcategory, payment_method]
+
+for route in routes:
+    app.include_router(route)

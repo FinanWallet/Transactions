@@ -20,8 +20,8 @@ def create_record(record: Record):
                   "description": record.description, 
                   "amount": record.amount, 
                   "account": record.account_id,
-                  "category_id": record.category_id, 
-                  "sub_category_id": record.sub_category_id,
+                  "category": record.category_id, 
+                  "sub_category": record.sub_category_id,
                   "payment_method": record.payment_method_id}
     
     result = connection.execute(records.insert().values(new_record))
@@ -33,8 +33,8 @@ def update_record(id: int, record: Record):
                                               description=record.description, 
                                               amount=record.amount, 
                                               account=record.account_id,
-                                              category_id=record.category_id, 
-                                              sub_category_id=record.sub_category_id,
+                                              category=record.category_id, 
+                                              sub_category=record.sub_category_id,
                                               payment_method=record.payment_method_id).where(record.c.id == id))
     return connection.execute(records.select().where(record.c.id == id)).first()
 

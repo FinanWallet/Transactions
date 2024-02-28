@@ -7,7 +7,7 @@ class Record(BaseModel):
     date: datetime
     description: str
     amount: float
-    account_id: int
-    category_id: int
-    sub_category_id: int
-    payment_method_id: int
+    account: int
+    category: int
+    subcategory: int
+    payment_method: int

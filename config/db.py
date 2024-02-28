@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine, Metadata
+from sqlalchemy import create_engine, MetaData
 
-engine = create_engine("mysql://root:root@localhost:3306/financeun")
+metadata = MetaData()
 
-meta = Metadata()
+engine = create_engine("mysql+pymysql://admin:Cod79022023b!@localhost:3306/financedb")
 
 connection = engine.connect()
