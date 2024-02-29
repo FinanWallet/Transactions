@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from routes.records import record
 from routes.accounts import account
 from routes.categories import category
 from routes.subcategories import subcategory
+from routes.records import record
 from routes.payment_methods import payment_method
 
 

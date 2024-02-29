@@ -3,7 +3,7 @@ from config.db import metadata, engine
 
 meta = MetaData()
 
-payment_methods = Table('record', metadata, Column('id', Integer, primary_key=True), 
+payment_methods = Table('payment_method', metadata, Column('id', Integer, primary_key=True), 
                Column('date', DateTime), 
                Column('name', String(255)))
 

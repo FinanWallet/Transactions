@@ -3,7 +3,7 @@ from config.db import metadata, engine
 
 meta = MetaData()
 
-accounts = Table('record', metadata, Column('id', Integer, primary_key=True), 
+accounts = Table('account', metadata, Column('id', Integer, primary_key=True), 
                Column('name', String(255)), 
                Column('limit', Float))
 

@@ -12,21 +12,21 @@ def get_payment_methods():
 
 @payment_method.get("/payment_methods/{id}", tags=["payment_methods"])
 def get_payment_method(id: int):
-    return connection.execute(payment_methods.select().where(payment_method.c.id == id)).first()
+    return connection.execute(payment_methods.select().where(payment_methods.c.id == id)).first()
 
 @payment_method.post("/payment_methods", response_model=Payment_method, status_code=HTTP_201_CREATED, tags=["payment_methods"])
 def create_payment_method(payment_method: Payment_method):
     new_payment_method = {"name": payment_method.name}
     
     result = connection.execute(payment_methods.insert().values(new_payment_method))
-    return connection.execute(payment_methods.select().where(payment_method.c.id == result.lastrowid)).first()
+    return connection.execute(payment_methods.select().where(payment_methods.c.id == result.lastrowid)).first()
 
 @payment_method.put("/payment_methods/{id}", response_model=Payment_method, status_code=HTTP_200_OK, tags=["payment_methods"])
 def update_payment_method(id: int, payment_method: Payment_method):
-    connection.execute(payment_methods.update().values(name=payment_method.name).where(payment_method.c.id == id))
-    return connection.execute(payment_methods.select().where(payment_method.c.id == id)).first()
+    connection.execute(payment_methods.update().values(name=payment_method.name).where(payment_methods.c.id == id))
+    return connection.execute(payment_methods.select().where(payment_methods.c.id == id)).first()
 
 @payment_method.delete("/payment_methods/{id}", status_code=HTTP_204_NO_CONTENT, tags=["payment_methods"])
 def delete_payment_method(id: int):
-    connection.execute(payment_methods.delete().where(payment_method.c.id == id))
+    connection.execute(payment_methods.delete().where(payment_methods.c.id == id))
     return Response(status_code=HTTP_204_NO_CONTENT)
