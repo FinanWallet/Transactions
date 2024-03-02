@@ -5,7 +5,7 @@ meta = MetaData()
 
 records = Table('record', metadata, Column('id', Integer, primary_key=True), 
                Column('date', DateTime), 
-               Column('description', String(255)), 
+               Column('description', String(50)), 
                Column('amount', Float),
                Column('account', Integer, ForeignKey('account.id')), 
                Column('category', Integer, ForeignKey('category.id')),

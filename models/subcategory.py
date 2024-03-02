@@ -4,7 +4,7 @@ from config.db import metadata, engine
 meta = MetaData()
 
 subcategories = Table('subcategory', metadata, Column('id', Integer, primary_key=True), 
-               Column('name', String(255)), 
+               Column('name', String(50)), 
                Column('category', Integer, ForeignKey('category.id')))
 
 metadata.create_all(engine)
