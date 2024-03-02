@@ -17,7 +17,6 @@ def get_subcategory(id: int):
 @subcategory.post("/subcategories", response_model=Subcategory, status_code=HTTP_201_CREATED, tags=["subcategories"])
 def create_subcategory(subcategory: Subcategory):
     new_subcategory = {"name": subcategory.name,
-                  "account": subcategory.account,
                   "category": subcategory.category}
     
     result = connection.execute(subcategories.insert().values(new_subcategory))
@@ -26,7 +25,6 @@ def create_subcategory(subcategory: Subcategory):
 @subcategory.put("/subcategories/{id}", response_model=Subcategory, status_code=HTTP_200_OK, tags=["subcategories"])
 def update_subcategory(id: int, subcategory: Subcategory):
     connection.execute(subcategories.update().values(name=subcategory.name, 
-                                              account=subcategory.account,
                                               category=subcategory.category).where(subcategories.c.id == id))
     return connection.execute(subcategories.select().where(subcategories.c.id == id)).first()
 
