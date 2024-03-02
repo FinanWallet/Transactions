@@ -4,7 +4,6 @@ from config.db import metadata, engine
 meta = MetaData()
 
 payment_methods = Table('payment_method', metadata, Column('id', Integer, primary_key=True), 
-               Column('date', DateTime), 
                Column('name', String(255)))
 
 metadata.create_all(engine)
