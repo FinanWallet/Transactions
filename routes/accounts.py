@@ -16,16 +16,14 @@ def get_record(id: int):
 
 @account.post("/accounts", response_model=Account, status_code=HTTP_201_CREATED, tags=["accounts"])
 def create_record(account: Account):
-    new_account = {"name": account.name, 
-                  "limit": account.limit}
+    new_account = {"name": account.name}
     
     result = connection.execute(accounts.insert().values(new_account))
     return connection.execute(accounts.select().where(accounts.c.id == result.lastrowid)).first()
 
 @account.put("/accounts/{id}", response_model=Account, status_code=HTTP_200_OK, tags=["accounts"])
 def update_record(id: int, record: Account):
-    connection.execute(accounts.update().values(name=account.name, 
-                                              limit=account.limit).where(accounts.c.id == id))
+    connection.execute(accounts.update().values(name=account.name).where(accounts.c.id == id))
     return connection.execute(accounts.select().where(accounts.c.id == id)).first()
 
 @account.delete("/accounts/{id}", status_code=HTTP_204_NO_CONTENT, tags=["accounts"])

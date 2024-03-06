@@ -4,12 +4,10 @@ from config.db import metadata, engine
 meta = MetaData()
 
 records = Table('record', metadata, Column('id', Integer, primary_key=True), 
+               Column('account_id', Integer, ForeignKey('account.id')),
+               Column('subcategory_id', Integer, ForeignKey('subcategory.id')),
                Column('date', DateTime), 
-               Column('description', String(50)), 
                Column('amount', Float),
-               Column('account', Integer, ForeignKey('account.id')), 
-               Column('category', Integer, ForeignKey('category.id')),
-               Column('subcategory', Integer, ForeignKey('subcategory.id')),
-               Column('payment_method', Integer, ForeignKey('payment_method.id')))
+               Column('description', String(50)))
 
 metadata.create_all(engine)

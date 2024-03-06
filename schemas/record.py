@@ -4,10 +4,9 @@ from typing import Optional
 
 class Record(BaseModel):
     id: Optional[int]
+    account_id: int    
+    subcategory_id: int
     date: date
-    description: str
     amount: float
-    account: int
-    category: int
-    subcategory: int
-    payment_method: int
+    description: str
+    

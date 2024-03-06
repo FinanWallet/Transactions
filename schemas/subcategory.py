@@ -5,4 +5,4 @@ from typing import Optional
 class Subcategory(BaseModel):
     id: Optional[int]
     name: str
-    category: int
+    category_id: int

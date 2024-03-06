@@ -4,8 +4,5 @@ from config.db import metadata, engine
 meta = MetaData()
 
 categories = Table('category', metadata, Column('id', Integer, primary_key=True), 
-               Column('name', String(50)), 
-               Column('limit', Float),
-               Column('account', Integer, ForeignKey('account.id')))
-
+               Column('name', String(50)))
 metadata.create_all(engine)
