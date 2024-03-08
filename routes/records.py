@@ -7,16 +7,17 @@ from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 record = APIRouter()
 
 @record.get("/records", response_model=list[Record], status_code=HTTP_200_OK, tags=["records"])
-def get_records():
-    return connection.execute(records.select()).fetchall()
+def get_records(user_id: int):
+    return connection.execute(records.select().where(records.c.user_id == user_id)).fetchall()
 
 @record.get("/records/{id}", tags=["records"])
-def get_record(id: int):
-    return connection.execute(records.select().where(records.c.id == id)).first()
+def get_record(id: int, user_id: int):
+    return connection.execute(records.select().where((records.c.id == id) & (records.c.user_id == user_id))).first()
 
 @record.post("/records", response_model=Record, status_code=HTTP_201_CREATED, tags=["records"])
 def create_record(record: Record):
-    new_record = {"account_id": record.account_id,
+    new_record = {"user_id": record.user_id,
+                  "account_id": record.account_id,
                   "subcategory_id": record.subcategory_id,
                   "date": record.date, 
                   "amount": record.amount, 
@@ -27,7 +28,8 @@ def create_record(record: Record):
 
 @record.put("/records/{id}", response_model=Record, status_code=HTTP_200_OK, tags=["records"])
 def update_record(id: int, record: Record):
-    connection.execute(records.update().values(account_id=record.account_id,
+    connection.execute(records.update().values(user_id=record.user_id,
+                                               account_id=record.account_id,
                                                subcategory_id=record.subcategory_id,
                                                date=record.date, 
                                                amount=record.amount, 
