@@ -20,15 +20,19 @@ def create_subcategory(subcategory: Subcategory):
                        "category_id": subcategory.category_id}
     
     result = connection.execute(subcategories.insert().values(new_subcategory))
+    connection.commit() # Commit the transaction
     return connection.execute(subcategories.select().where(subcategories.c.id == result.lastrowid)).first()
 
 @subcategory.put("/subcategories/{id}", response_model=Subcategory, status_code=HTTP_200_OK, tags=["subcategories"])
 def update_subcategory(id: int, subcategory: Subcategory):
     connection.execute(subcategories.update().values(name=subcategory.name, 
                                               category_id=subcategory.category_id).where(subcategories.c.id == id))
+    
+    connection.commit()  # Commit the transaction
     return connection.execute(subcategories.select().where(subcategories.c.id == id)).first()
 
 @subcategory.delete("/subcategories/{id}", status_code=HTTP_204_NO_CONTENT, tags=["subcategories"])
 def delete_subcategory(id: int):
     connection.execute(subcategories.delete().where(subcategories.c.id == id))
+    connection.commit() # Commit the transaction
     return Response(status_code=HTTP_204_NO_CONTENT)

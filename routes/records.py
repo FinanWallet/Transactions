@@ -24,6 +24,7 @@ def create_record(record: Record):
                   "description": record.description}
     
     result = connection.execute(records.insert().values(new_record))
+    connection.commit()  # Commit the transaction
     return connection.execute(records.select().where(records.c.id == result.lastrowid)).first()
 
 @record.put("/records/{id}", response_model=Record, status_code=HTTP_200_OK, tags=["records"])
@@ -34,9 +35,12 @@ def update_record(id: int, record: Record):
                                                date=record.date, 
                                                amount=record.amount, 
                                                description=record.description).where(records.c.id == id))
+    
+    connection.commit()  # Commit the transaction
     return connection.execute(records.select().where(records.c.id == id)).first()
 
 @record.delete("/records/{id}", status_code=HTTP_204_NO_CONTENT, tags=["records"])
 def delete_record(id: int):
     connection.execute(records.delete().where(records.c.id == id))
+    connection.commit()
     return Response(status_code=HTTP_204_NO_CONTENT)

@@ -19,14 +19,17 @@ def create_category(category: Category):
     new_category = {"name": category.name}
     
     result = connection.execute(categories.insert().values(new_category))
+    connection.commit()  # Commit the transaction
     return connection.execute(categories.select().where(categories.c.id == result.lastrowid)).first()
 
 @category.put("/categories/{id}", response_model=Category, status_code=HTTP_200_OK, tags=["categories"])
 def update_record(id: int, category: Category):
     connection.execute(categories.update().values(name=category.name).where(categories.c.id == id))
+    connection.commit()  # Commit the transaction
     return connection.execute(categories.select().where(categories.c.id == id)).first()
 
 @category.delete("/categories/{id}", status_code=HTTP_204_NO_CONTENT, tags=["categories"])
 def delete_record(id: int):
     connection.execute(categories.delete().where(categories.c.id == id))
+    connection.commit()  # Commit the transaction
     return Response(status_code=HTTP_204_NO_CONTENT)
