@@ -10,7 +10,7 @@ category = APIRouter()
 def get_categories():
     return connection.execute(categories.select()).fetchall()
 
-@category.get("/categories/{id}", tags=["categories"])
+@category.get("/categories/{id}", response_model=Category, tags=["categories"])
 def get_category(id: int):
     return connection.execute(categories.select().where(categories.c.id == id)).first()
 

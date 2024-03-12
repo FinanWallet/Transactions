@@ -1,9 +1,7 @@
 FROM python:3.11.5
-ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
-ARG URL=0.0.0.0:8000
-CMD ["sh", "-c", "uvicorn app:app $URL"]
+#CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]

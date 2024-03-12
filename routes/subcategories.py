@@ -10,7 +10,7 @@ subcategory = APIRouter()
 def get_subcategories():
     return connection.execute(subcategories.select()).fetchall()
 
-@subcategory.get("/subcategories/{id}", tags=["subcategories"])
+@subcategory.get("/subcategories/{id}", response_model=Subcategory, tags=["subcategories"])
 def get_subcategory(id: int):
     return connection.execute(subcategories.select().where(subcategories.c.id == id)).first()
 

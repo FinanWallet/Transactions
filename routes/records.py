@@ -10,7 +10,7 @@ record = APIRouter()
 def get_records(user_id: int):
     return connection.execute(records.select().where(records.c.user_id == user_id)).fetchall()
 
-@record.get("/records/{id}", tags=["records"])
+@record.get("/records/{id}", response_model=Record, tags=["records"])
 def get_record(id: int, user_id: int):
     return connection.execute(records.select().where((records.c.id == id) & (records.c.user_id == user_id))).first()
 
