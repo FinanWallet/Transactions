@@ -5,7 +5,7 @@ from routes.records import record
 
 
 app = FastAPI(
-    title="FinanceUN",
+    title="MyWalletWise",
     description="This is a simple example of a FastAPI app with SQLAlchemy and MySQL",
     version="0.1",
     docs_url="/",
