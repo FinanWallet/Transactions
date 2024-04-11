@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Cod79022023b!
+      MYSQL_DATABASE: db1_mysql
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Cod79022023b!
+    build: 
+      context: ./database
+      dockerfile: Dockerfile
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
