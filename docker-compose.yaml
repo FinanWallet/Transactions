@@ -10,7 +10,7 @@ services:
       DB_USER: admin
       DB_PASSWORD: Cod79022023b!
       DB_HOST: records_db
-      DB_PORT: 3306
+      DB_PORT: 3307
       DB_NAME: db1_mysql
 
   records_db:
