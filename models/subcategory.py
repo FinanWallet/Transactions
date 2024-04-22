@@ -9,9 +9,9 @@ subcategories = Table('subcategory', metadata, Column('id', Integer, primary_key
 
 metadata.create_all(engine)
 
-with engine.connect() as connection:
-    connection.execute(insert(subcategories), [
-        {"name": "Lunch", "category_id": 1},
-        {"name": "Transport", "category_id": 1},
-        {"name": "Rent", "category_id": 2},
-    ])
+# with engine.connect() as connection:
+#     connection.execute(insert(subcategories), [
+#         {"name": "Lunch", "category_id": 1},
+#         {"name": "Transport", "category_id": 1},
+#         {"name": "Rent", "category_id": 2},
+#     ])
