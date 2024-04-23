@@ -42,7 +42,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            ${{ steps.commit.outputs.short }}
+            latest
 
       - name: Build, tag and push Docker image
         env:
