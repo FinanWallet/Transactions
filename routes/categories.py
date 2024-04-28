@@ -14,7 +14,7 @@ def get_categories():
 def get_category(id: int):
     return connection.execute(categories.select().where(categories.c.id == id)).first()
 
-@category.post("/categories", response_model=CategoryIn, status_code=HTTP_201_CREATED, tags=["categories"])
+@category.post("/categories", response_model=CategoryOut, status_code=HTTP_201_CREATED, tags=["categories"])
 def create_category(category: CategoryIn):
     new_category = {"name": category.name}
     
@@ -22,7 +22,7 @@ def create_category(category: CategoryIn):
     connection.commit()  # Commit the transaction
     return connection.execute(categories.select().where(categories.c.id == result.lastrowid)).first()
 
-@category.put("/categories/{id}", response_model=CategoryIn, status_code=HTTP_200_OK, tags=["categories"])
+@category.put("/categories/{id}", response_model=CategoryOut, status_code=HTTP_200_OK, tags=["categories"])
 def update_record(id: int, category: CategoryIn):
     connection.execute(categories.update().values(name=category.name).where(categories.c.id == id))
     connection.commit()  # Commit the transaction

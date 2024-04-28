@@ -14,7 +14,7 @@ def get_records(user_id: int):
 def get_record(id: int, user_id: int):
     return connection.execute(records.select().where((records.c.id == id) & (records.c.user_id == user_id))).first()
 
-@record.post("/records", response_model=RecordIn, status_code=HTTP_201_CREATED, tags=["records"])
+@record.post("/records", response_model=RecordOut, status_code=HTTP_201_CREATED, tags=["records"])
 def create_record(record: RecordIn):
     new_record = {"user_id": record.user_id,
                   "account_id": record.account_id,
@@ -29,7 +29,7 @@ def create_record(record: RecordIn):
     connection.commit()  # Commit the transaction
     return connection.execute(records.select().where(records.c.id == result.lastrowid)).first()
 
-@record.put("/records/{id}", response_model=RecordIn, status_code=HTTP_200_OK, tags=["records"])
+@record.put("/records/{id}", response_model=RecordOut, status_code=HTTP_200_OK, tags=["records"])
 def update_record(id: int, record: RecordIn):
     connection.execute(records.update().values(user_id=record.user_id,
                                                account_id=record.account_id,
@@ -46,5 +46,11 @@ def update_record(id: int, record: RecordIn):
 @record.delete("/records/{id}", status_code=HTTP_204_NO_CONTENT, tags=["records"])
 def delete_record(id: int):
     connection.execute(records.delete().where(records.c.id == id))
+    connection.commit()
+    return Response(status_code=HTTP_204_NO_CONTENT)
+
+@record.get("/records/{user_id}", response_model=RecordOut, tags=["records"])
+def delete_record_by_user(user_id: int):
+    connection.execute(records.delete().where(records.c.user_id == user_id))
     connection.commit()
     return Response(status_code=HTTP_204_NO_CONTENT)

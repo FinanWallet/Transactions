@@ -14,7 +14,7 @@ def get_subcategories():
 def get_subcategory(id: int):
     return connection.execute(subcategories.select().where(subcategories.c.id == id)).first()
 
-@subcategory.post("/subcategories", response_model=SubcategoryIn, status_code=HTTP_201_CREATED, tags=["subcategories"])
+@subcategory.post("/subcategories", response_model=SubcategoryOut, status_code=HTTP_201_CREATED, tags=["subcategories"])
 def create_subcategory(subcategory: SubcategoryIn):
     new_subcategory = {"name": subcategory.name,
                        "category_id": subcategory.category_id}
@@ -23,11 +23,10 @@ def create_subcategory(subcategory: SubcategoryIn):
     connection.commit() # Commit the transaction
     return connection.execute(subcategories.select().where(subcategories.c.id == result.lastrowid)).first()
 
-@subcategory.put("/subcategories/{id}", response_model=SubcategoryIn, status_code=HTTP_200_OK, tags=["subcategories"])
+@subcategory.put("/subcategories/{id}", response_model=SubcategoryOut, status_code=HTTP_200_OK, tags=["subcategories"])
 def update_subcategory(id: int, subcategory: SubcategoryIn):
     connection.execute(subcategories.update().values(name=subcategory.name, 
                                               category_id=subcategory.category_id).where(subcategories.c.id == id))
-    
     connection.commit()  # Commit the transaction
     return connection.execute(subcategories.select().where(subcategories.c.id == id)).first()
 
