@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 class Record(BaseModel):
-    id: int
+    id: Optional[int]
     user_id: int
     account_id: int    
     category_id: int

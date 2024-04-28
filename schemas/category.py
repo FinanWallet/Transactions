@@ -2,5 +2,5 @@ from pydantic import BaseModel
 from typing import Optional
 
 class Category(BaseModel):
-    id: int
+    id: optional[int]
     name: str
