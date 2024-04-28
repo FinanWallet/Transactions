@@ -1,21 +1,21 @@
 from fastapi import APIRouter, Response
 from config.db import connection
 from models.record import records
-from schemas.record import Record
+from schemas.record import RecordIn, RecordOut
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
 record = APIRouter()
 
-@record.get("/records", response_model=list[Record], status_code=HTTP_200_OK, tags=["records"])
+@record.get("/records", response_model=list[RecordOut], status_code=HTTP_200_OK, tags=["records"])
 def get_records(user_id: int):
     return connection.execute(records.select().where(records.c.user_id == user_id)).fetchall()
 
-@record.get("/records/{id}", response_model=Record, tags=["records"])
+@record.get("/records/{id}", response_model=RecordOut, tags=["records"])
 def get_record(id: int, user_id: int):
     return connection.execute(records.select().where((records.c.id == id) & (records.c.user_id == user_id))).first()
 
-@record.post("/records", response_model=Record, status_code=HTTP_201_CREATED, tags=["records"])
-def create_record(record: Record):
+@record.post("/records", response_model=RecordIn, status_code=HTTP_201_CREATED, tags=["records"])
+def create_record(record: RecordIn):
     new_record = {"user_id": record.user_id,
                   "account_id": record.account_id,
                   "category_id": record.category_id,
@@ -29,8 +29,8 @@ def create_record(record: Record):
     connection.commit()  # Commit the transaction
     return connection.execute(records.select().where(records.c.id == result.lastrowid)).first()
 
-@record.put("/records/{id}", response_model=Record, status_code=HTTP_200_OK, tags=["records"])
-def update_record(id: int, record: Record):
+@record.put("/records/{id}", response_model=RecordIn, status_code=HTTP_200_OK, tags=["records"])
+def update_record(id: int, record: RecordIn):
     connection.execute(records.update().values(user_id=record.user_id,
                                                account_id=record.account_id,
                                                category_id=record.category_id,
