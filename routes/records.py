@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Response
 from config.db import connection
 from models.record import records
-from schemas.record import RecordIn, RecordOut
+from schemas.record import RecordIn, RecordOut, RecordUpdate
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
 record = APIRouter()
@@ -30,9 +30,8 @@ def create_record(record: RecordIn):
     return connection.execute(records.select().where(records.c.id == result.lastrowid)).first()
 
 @record.put("/records/{id}", response_model=RecordOut, status_code=HTTP_200_OK, tags=["records"])
-def update_record(id: int, record: RecordIn):
-    connection.execute(records.update().values(user_id=record.user_id,
-                                               account_id=record.account_id,
+def update_record(id: int, record: RecordUpdate):
+    connection.execute(records.update().values(account_id=record.account_id,
                                                category_id=record.category_id,
                                                subcategory_id=record.subcategory_id,
                                                type=record.type,

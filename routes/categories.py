@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Response
 from config.db import connection
 from models.category import categories
-from schemas.category import CategoryIn, CategoryOut
+from schemas.category import CategoryIn, CategoryOut, CategoryUpdate
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
 category = APIRouter()
@@ -23,7 +23,7 @@ def create_category(category: CategoryIn):
     return connection.execute(categories.select().where(categories.c.id == result.lastrowid)).first()
 
 @category.put("/categories/{id}", response_model=CategoryOut, status_code=HTTP_200_OK, tags=["categories"])
-def update_record(id: int, category: CategoryIn):
+def update_record(id: int, category: CategoryUpdate):
     connection.execute(categories.update().values(name=category.name).where(categories.c.id == id))
     connection.commit()  # Commit the transaction
     return connection.execute(categories.select().where(categories.c.id == id)).first()

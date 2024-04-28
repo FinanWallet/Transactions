@@ -6,3 +6,6 @@ class CategoryIn(BaseModel):
 class CategoryOut(BaseModel):
     id: int
     name: str
+
+class CategoryUpdate(BaseModel):
+    name: str

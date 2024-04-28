@@ -21,3 +21,12 @@ class RecordOut(BaseModel):
     date: date
     amount: float
     description: str
+
+class RecordUpdate(BaseModel):
+    account_id: int    
+    category_id: int
+    subcategory_id: int
+    type: bool
+    date: date
+    amount: float
+    description: str
