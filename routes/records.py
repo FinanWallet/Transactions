@@ -18,7 +18,9 @@ def get_record(id: int, user_id: int):
 def create_record(record: Record):
     new_record = {"user_id": record.user_id,
                   "account_id": record.account_id,
+                  "category_id": record.category_id,
                   "subcategory_id": record.subcategory_id,
+                  "type": record.type,
                   "date": record.date, 
                   "amount": record.amount, 
                   "description": record.description}
@@ -31,7 +33,9 @@ def create_record(record: Record):
 def update_record(id: int, record: Record):
     connection.execute(records.update().values(user_id=record.user_id,
                                                account_id=record.account_id,
+                                               category_id=record.category_id,
                                                subcategory_id=record.subcategory_id,
+                                               type=record.type,
                                                date=record.date, 
                                                amount=record.amount, 
                                                description=record.description).where(records.c.id == id))

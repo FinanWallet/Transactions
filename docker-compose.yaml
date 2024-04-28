@@ -5,7 +5,8 @@ services:
     ports:
       - "8002:8002"
     depends_on:
-      - db
+      "db":
+        condition: service_healthy
     environment:
       DB_USER: admin
       DB_PASSWORD: Cod79022023b!
@@ -20,8 +21,10 @@ services:
       MYSQL_DATABASE: db1_mysql
       MYSQL_USER: admin
       MYSQL_PASSWORD: Cod79022023b!
-    volumes:
-      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
 
 volumes:
