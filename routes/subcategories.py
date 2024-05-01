@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Response
 from config.db import connection
-from models.subcategory import subcategories
+from models.category import subcategories
 from schemas.subcategory import SubcategoryIn, SubcategoryOut
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
