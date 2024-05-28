@@ -1,6 +1,11 @@
 from pydantic import BaseModel
-from typing import Optional
 
-class Category(BaseModel):
-    id: Optional[int]
+class CategoryIn(BaseModel):
+    name: str
+
+class CategoryOut(BaseModel):
+    id: int
+    name: str
+
+class CategoryUpdate(BaseModel):
     name: str

@@ -1,29 +1,29 @@
 from fastapi import APIRouter, Response
 from config.db import connection
 from models.category import categories
-from schemas.category import Category
+from schemas.category import CategoryIn, CategoryOut, CategoryUpdate
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
 category = APIRouter()
 
-@category.get("/categories", response_model=list[Category], status_code=HTTP_200_OK, tags=["categories"])
+@category.get("/categories", response_model=list[CategoryOut], status_code=HTTP_200_OK, tags=["categories"])
 def get_categories():
     return connection.execute(categories.select()).fetchall()
 
-@category.get("/categories/{id}", response_model=Category, tags=["categories"])
+@category.get("/categories/{id}", response_model=CategoryOut, tags=["categories"])
 def get_category(id: int):
     return connection.execute(categories.select().where(categories.c.id == id)).first()
 
-@category.post("/categories", response_model=Category, status_code=HTTP_201_CREATED, tags=["categories"])
-def create_category(category: Category):
+@category.post("/categories", response_model=CategoryOut, status_code=HTTP_201_CREATED, tags=["categories"])
+def create_category(category: CategoryIn):
     new_category = {"name": category.name}
     
     result = connection.execute(categories.insert().values(new_category))
     connection.commit()  # Commit the transaction
     return connection.execute(categories.select().where(categories.c.id == result.lastrowid)).first()
 
-@category.put("/categories/{id}", response_model=Category, status_code=HTTP_200_OK, tags=["categories"])
-def update_record(id: int, category: Category):
+@category.put("/categories/{id}", response_model=CategoryOut, status_code=HTTP_200_OK, tags=["categories"])
+def update_record(id: int, category: CategoryUpdate):
     connection.execute(categories.update().values(name=category.name).where(categories.c.id == id))
     connection.commit()  # Commit the transaction
     return connection.execute(categories.select().where(categories.c.id == id)).first()

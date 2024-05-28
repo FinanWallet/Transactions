@@ -1,7 +1,14 @@
 from pydantic import BaseModel
-from typing import Optional
 
-class Subcategory(BaseModel):
-    id: Optional[int]
+class SubcategoryIn(BaseModel):
+    name: str
+    category_id: int
+
+class SubcategoryOut(BaseModel):
+    id: int
+    name: str
+    category_id: int
+
+class SubcategoryUpdate(BaseModel):
     name: str
     category_id: int
