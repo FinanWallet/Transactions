@@ -6,12 +6,14 @@ from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
 record = APIRouter()
 
-@record.get("/records", response_model=list[RecordOut], status_code=HTTP_200_OK, tags=["records"])
+@record.get("/records/{user_id}", response_model=list[RecordOut], status_code=HTTP_200_OK, tags=["records"])
 def get_records(user_id: int):
+    print(user_id)
     return connection.execute(records.select().where(records.c.user_id == user_id)).fetchall()
 
-@record.get("/records/{id}", response_model=RecordOut, tags=["records"])
+@record.get("/records/{user_id}/{id}", response_model=RecordOut, tags=["records"])
 def get_record(id: int, user_id: int):
+    print(id,user_id)
     return connection.execute(records.select().where((records.c.id == id) & (records.c.user_id == user_id))).first()
 
 @record.post("/records", response_model=RecordOut, status_code=HTTP_201_CREATED, tags=["records"])
@@ -48,8 +50,8 @@ def delete_record(id: int):
     connection.commit()
     return Response(status_code=HTTP_204_NO_CONTENT)
 
-@record.get("/records/{user_id}", response_model=RecordOut, tags=["records"])
-def delete_record_by_user(user_id: int):
-    connection.execute(records.delete().where(records.c.user_id == user_id))
-    connection.commit()
-    return Response(status_code=HTTP_204_NO_CONTENT)
+# @record.get("/records/{user_id}", response_model=RecordOut, tags=["records"])
+# def delete_record_by_user(user_id: int):
+#     connection.execute(records.delete().where(records.c.user_id == user_id))
+#     connection.commit()
+#     return Response(status_code=HTTP_204_NO_CONTENT)

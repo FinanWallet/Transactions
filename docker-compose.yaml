@@ -1,34 +1,31 @@
-version: '3'
+version: "3"
 services:
   app:
-    build: .
+    # build: .
+    image: finanwallet/records
     ports:
-      - "8002:8002"
-    depends_on:
-      "db":
-        condition: service_healthy
+      - "7002:7002"
+    # depends_on:
+    #   "db":
+    #     condition: service_healthy
     environment:
-      DB_USER: admin
-      DB_PASSWORD: Cod79022023b!
-      DB_HOST: records-db-1
-      DB_PORT: 3306
-      DB_NAME: db1_mysql
-
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: Cod79022023b!
-      MYSQL_DATABASE: db1_mysql
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: Cod79022023b!
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
-    volumes:
-      - db_data:/var/lib/mysql
-
-
-
+      DB_USER: doadmin
+      DB_PASSWORD: AVNS_i2uCJcpzVDwo6Bxcyil
+      DB_HOST: records-db-do-user-16719488-0.c.db.ondigitalocean.com
+      DB_PORT: 25060
+      DB_NAME: records
+  # db:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: Cod79022023b!
+  #     MYSQL_DATABASE: db1_mysql
+  #     MYSQL_USER: admin
+  #     MYSQL_PASSWORD: Cod79022023b!
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+  #   volumes:
+  #     - db_data:/var/lib/mysql
 volumes:
   db_data:
